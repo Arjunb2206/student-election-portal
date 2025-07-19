@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<head>
+<title>Election Rules & Regulations</title>
+<link rel="stylesheet" href="election-styles.css">
+<style>
+table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+    vertical-align: top;
+}
+
+td b {
+    font-size: 16px;
+    color: #003366;
+}
+
+td i {
+    font-size: 14px;
+    color: #555;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+@media (max-width: 768px) {
+    table {
+        display: block;
+    }
+    
+    td {
+        display: block;
+        width: 100% !important;
+    }
+    
+    td div {
+        max-height: none !important;
+    }
+}
+</style>
+</head>
+<body>
+   <header>
+        <div class="logo-container">
+            <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BENGALURU</b></h1>
+                <h2 style="color:white;">Student Election Portal </h2>
+            </div>
+            <div class="user-display">
+                <span id="userDisplay">Welcome, Student!</span>
+                <a href="login.html" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+    </header>
+  <nav>
+    <a href="main.html">Dashboard</a>
+    <a href="candidates.html">Rules & Candidates</a>
+    <a href="candidates.html" class="active">Rules</a>
+    <a href="ongoing-elections.html">Ongoing Elections</a>
+  </nav>
+  
+  <div class="container">
+    <table>
+      <tr>
+        <td align="left" valign="top" style="width: 40%;">
+          <img src="vote.jpeg" alt="Voting Illustration" style="width: 100%; height: auto; border-radius: 10px;">
+        </td>
+        <td align="left" valign="top" style="width: 60%; padding: 15px;">
+          <div style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+            <h2 style="color: #003366; margin-top: 0;">Election Rules & Regulations</h2>
+            <div style="font-size: 16px; line-height: 1.6;">
+              <p><b>1. Eligibility:</b><br>
+              <i>- Only currently enrolled students with valid credentials may vote<br>
+                 - One vote per student per position</i></p>
+              
+              <p><b>2. Voting Period:</b><br>
+              <i>- Voting opens at [9:00/date:01-01-2025] and closes at [18:00/date:01-01-2025]<br>
+                 - No votes accepted after the deadline</i></p>
+              
+              <p><b>3. Voter Conduct:</b><br>
+              <i>- No campaigning within voting areas<br>
+                 - No sharing of login credentials<br>
+                 - No coercion or vote-buying allowed</i></p>
+              
+              <p><b>4. Ballot Rules:</b><br>
+              <i>- Selections are final once submitted<br>
+                 - No write-in candidates allowed<br>
+                 - Abstention option available for each position</i></p>
+              
+              <p><b>5. Technical Rules:</b><br>
+              <i>- Votes are anonymous and cannot be traced to individuals<br>
+                 - System will prevent multiple voting attempts<br>
+                 - Technical issues must be reported immediately</i></p>
+              
+              <p><b>6. Results:</b><br>
+              <i>- Winners determined by simple majority<br>
+                 - Results will be certified before announcement<br>
+                 - Recounts may be requested within 24 hours of results</i></p>
+              
+              <p><b>7. Violations:</b><br>
+              <i>- Any violation may result in vote disqualification<br>
+                 - Serious offenses may lead to disciplinary action</i></p>
+              
+              <p><b>Note:</b> All decisions by the Election Committee are final.</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <footer>
+    <p style="color:white;"> ※for more information visit :<a href="ass(vote).html"> rules</a></p>
+    <p style="color:white;">&copy; 2025 Your Website. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+

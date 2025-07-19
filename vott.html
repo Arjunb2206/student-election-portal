@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Election Profiles</title>
+    <!-- Link to custom CSS files -->
+    <link rel="stylesheet" href="vott-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BENGALURU</b></h1>
+                <h2 style="color:white;">Student Election Portal - Candidate Information</h2>
+            </div>
+            <div class="user-display">
+                <span id="userDisplay">Welcome, Student!</span>
+                <a href="login.html" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+    </header>
+    <nav>
+    <a href="main.html">Dashboard</a>
+    <a href="candidates.html">Rules & Candidates</a>
+    <a href="vott.html" class="active">Candidates</a>
+    <a href="ongoing-elections.html">Ongoing Elections</a>
+  </nav>
+    <div class="container mx-auto p-4">
+        <!-- Filter buttons -->
+        <div class="flex flex-wrap justify-center gap-2 my-6">
+            <button class="filter-btn bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors" data-category="all">All Elections</button>
+            <button class="filter-btn bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition-colors" data-category="gdg">GDG</button>
+            <button class="filter-btn bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition-colors" data-category="microsoft">Microsoft SAE</button>
+            <button class="filter-btn bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition-colors" data-category="amity">AWS</button>
+            <button class="filter-btn bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition-colors" data-category="IEEE">IEEE</button>
+        </div>
+
+        <!-- Student profiles grid -->
+        <div id="students-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Student cards will be populated here -->
+        </div>
+    </div>
+
+    <!-- Modal for detailed student profile -->
+    <div id="student-modal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold" id="modal-name"></h2>
+                <button id="close-modal" class="text-gray-600 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <div id="modal-content" class="space-y-4">
+                <!-- Student details will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* Essential modal display styles that need to be inline */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+    </style>
+
+    <footer>
+        <div class="footer-content">
+            <p style="color:white;">© 2025 Amity University Bengaluru. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample student data
+       const students = [
+    // GDG Elections (4 Students)
+    {
+        id: 1,
+        name: "Yashwanth",
+        category: "gdg",
+        categoryName: "GDG Elections",
+        position: "President",
+        image: "1.jpg",
+        department: "Computer Science",
+        year: 3,
+        bio: "Alex is an enthusiastic developer with a passion for Google technologies. He has been an active member of GDG for 2 years and has organized multiple workshops on Android development.",
+        achievements: ["Google Developer Expert", "Hackathon Winner 2024", "Open Source Contributor"],
+        manifesto: "I aim to expand our outreach programs and organize more hands-on workshops to help students build practical skills in Google technologies."
+    },
+    {
+        id: 2,
+        name: "Adithya",
+        category: "gdg",
+        categoryName: "GDG Elections",
+        position: "President",
+        image: "2.jpg",
+        department: "Software Engineering",
+        year: 2,
+        bio: "Sophia is skilled in Flutter development and has contributed to several open-source projects. She enjoys teaching and mentoring new programmers.",
+        achievements: ["Flutter Forward Scholar", "Google I/O Attendee", "Tech Blog Author"],
+        manifesto: "My goal is to create a more inclusive community for developers of all backgrounds and skill levels."
+    },
+    {
+        id: 3,
+        name: "Sujay ",
+        category: "gdg",
+        categoryName: "GDG Elections",
+        position: "President",
+        image: "3.jpg",
+        department: "Data Science",
+        year: 4,
+        bio: "John is a data science enthusiast with experience in machine learning and big data analytics. He has led several GDG events on data-driven technologies.",
+        achievements: ["Google Cloud Certified", "ML Expert", "Data Science Workshop Organizer"],
+        manifesto: "I will ensure the effective use of resources and provide more data-driven workshops for the GDG community."
+    },
+    {
+        id: 4,
+        name: "Naman",
+        category: "gdg",
+        categoryName: "GDG Elections",
+        position: "President",
+        image: "4.jpg",
+        department: "Web Development",
+        year: 2,
+        bio: "Mia is passionate about web technologies and has been a part of GDG since her first year. She believes in promoting accessible learning for everyone.",
+        achievements: ["Web Development Intern", "GDG Event Speaker", "Community Outreach Volunteer"],
+        manifesto: "I will help facilitate more events focused on web technologies and community outreach to bring new members to GDG."
+    },
+   
+
+    // Microsoft SA Elections (4 Students)
+    {
+        id: 5,
+        name: "Tarun",
+        category: "microsoft",
+        categoryName: "Microsoft Elections",
+        position: "President",
+        image: "5.jpg",
+        department: "Information Technology",
+        year: 3,
+        bio: "Emily has been a Microsoft Learn Student Ambassador for 2 years, specializing in Azure and Microsoft 365 technologies. She loves organizing tech community events.",
+        achievements: ["Gold Microsoft Student Ambassador", "Azure AI Fundamentals Certified", "Microsoft Imagine Cup Finalist"],
+        manifesto: "I plan to create more opportunities for students to engage with Microsoft technologies through workshops, hackathons, and mentorship programs."
+    },
+    {
+        id: 6,
+        name: "Prajwal",
+        category: "microsoft",
+        categoryName: "Microsoft Elections",
+        position: "President",
+        image: "6.jpg",
+        department: "Computer Engineering",
+        year: 2,
+        bio: "David is passionate about cloud computing and software engineering. He has been an active member of the Microsoft Ambassador program and is involved in multiple community projects.",
+        achievements: ["Azure Cloud Advocate", "Certified Microsoft Professional", "Community Service Award"],
+        manifesto: "I will focus on expanding the accessibility of Microsoft technologies for students and create more collaborative opportunities."
+    },
+    {
+        id: 7,
+        name: "Nikunj",
+        category: "microsoft",
+        categoryName: "Microsoft Elections",
+        position: "President",
+        image: "7.jpg",
+        department: "Cybersecurity",
+        year: 3,
+        bio: "Liam is an aspiring cybersecurity professional with an interest in securing cloud platforms. He has been a part of Microsoft SAE for a year and has organized various security workshops.",
+        achievements: ["Microsoft Azure Security Certified", "Cybersecurity Awareness Advocate", "Student Leader in Microsoft Events"],
+        manifesto: "I will prioritize the security of our digital infrastructure and ensure that we have the resources needed to run high-impact Microsoft events."
+    },
+    {
+        id: 8,
+        name: "Arjun",
+        category: "microsoft",
+        categoryName: "Microsoft Elections",
+        position: "President",
+        image: "8.jpg",
+        department: "Software Development",
+        year: 2,
+        bio: "Olivia loves coding and helping others learn. She is focused on spreading knowledge of Microsoft technologies through community-building events.",
+        achievements: ["Microsoft Certified Developer", "Community Outreach Volunteer", "Hackathon Organizer"],
+        manifesto: "My goal is to increase student participation in Microsoft events and create a welcoming atmosphere for everyone interested in technology."
+    },
+    
+    // IEEE Elections (4 Students)
+    {
+        id: 9,
+        name: "Vikram",
+        category: "IEEE",
+        categoryName: "IEEE Elections",
+        position: "President",
+        image: "9.jpg",
+        department: "Mechanical Engineering",
+        year: 4,
+        bio: "Aiden has led multiple SAE teams and has a passion for sustainable energy solutions. He aims to promote innovation in the automotive and mechanical sectors.",
+        achievements: ["SAE Team Captain", "Innovative Design Award", "Sustainable Engineering Advocate"],
+        manifesto: "I plan to focus on innovative vehicle designs and lead projects that tackle real-world environmental problems."
+    },
+    {
+        id: 10,
+        name: "Sundeep",
+        category: "IEEE",
+        categoryName: "IEEE Elections",
+        position: "President",
+        image: "10.jpg",
+        department: "Electrical Engineering",
+        year: 3,
+        bio: "Emily specializes in electrical systems and is passionate about making the automotive sector more sustainable through advanced tech solutions.",
+        achievements: ["Electrified Vehicle Design Expert", "SAE Team Leader", "Technology Innovator"],
+        manifesto: "I want to create projects that fuse electrical and mechanical systems to make our vehicles safer and more energy-efficient."
+    },
+    {
+        id: 11,
+        name: "Jake",
+        category: "IEEE",
+        categoryName: "IEEE Elections",
+        position: "President",
+        image: "11.jpg",
+        department: "Civil Engineering",
+        year: 3,
+        bio: "Jake is passionate about structural integrity and aims to bring innovative materials into vehicle design for improved safety.",
+        achievements: ["Structural Integrity Expert", "SAE Member of the Year", "Safety System Designer"],
+        manifesto: "I will work to enhance the safety protocols of our designs and ensure that our projects meet high engineering standards."
+    },
+    {
+        id: 12,
+        name: "Pranay",
+        category: "IEEE",
+        categoryName: "IEEE Elections",
+        position: "President",
+        image: "12.jpg",
+        department: "Chemical Engineering",
+        year: 2,
+        bio: "Charlotte is interested in sustainable materials and green technologies in engineering. She brings a unique perspective to the team with her chemical engineering background.",
+        achievements: ["Green Tech Advocate", "SAE Finance Officer", "Sustainable Engineering Advocate"],
+        manifesto: "I will ensure that all projects are financed efficiently and that we focus on sustainable engineering solutions."
+    },
+   
+
+    // Amity College Elections (4 Students)
+    {
+        id: 13,
+        name: "Ram Charan",
+        category: "amity",
+        categoryName: "AWS Elections",
+        position: "President",
+        image: "13.jpg",
+        department: "Business Administration",
+        year: 4,
+        bio: "Aiden is a charismatic leader who has been at the helm of multiple student initiatives. He is passionate about student welfare and academic growth.",
+        achievements: ["Top 10 Business Innovator", "Leadership Award Winner", "Public Speaking Champion"],
+        manifesto: "I will work hard to improve the college's infrastructure, academic resources, and student involvement through various initiatives."
+    },
+    {
+        id: 14,
+        name: "Manoj",
+        category: "amity",
+        categoryName: "AWS Elections",
+        position: "President",
+        image: "14.jpg",
+        department: "Marketing",
+        year: 2,
+        bio: "Emily is passionate about marketing and event management. She has organized multiple campaigns and social events for the college community.",
+        achievements: ["Social Media Influencer", "Event Planning Expert", "Marketing Internship Awardee"],
+        manifesto: "I want to bring more fun and engaging events for students while promoting a collaborative environment for all departments."
+    },
+    {
+        id: 15,
+        name: "Akash",
+        category: "amity",
+        categoryName: "AWS Elections",
+        position: "President",
+        image: "15.jpg",
+        department: "Finance",
+        year: 3,
+        bio: "Jake is a finance enthusiast and has experience leading college clubs. He is focused on making the college's resources more accessible to every student.",
+        achievements: ["Finance Club President", "Budgeting Expert", "Finance Internship"],
+        manifesto: "My plan is to ensure that every department gets the resources they need for academic and extracurricular growth."
+    },
+    {
+        id: 16,
+        name: "Rakesh",
+        category: "amity",
+        categoryName: "AWS Elections",
+        position: "President",
+        image: "16.jpg",
+        department: "Economics",
+        year: 2,
+        bio: "Charlotte is committed to transparency and ensuring that student funds are used wisely to benefit all. She also has a passion for economics.",
+        achievements: ["Economics Debate Champion", "Student Government Volunteer", "Financial Planning Expert"],
+        manifesto: "I will work to create a transparent budgeting process and ensure that student organizations have enough funds to succeed."
+    },
+];
+
+
+        // DOM elements
+        const studentsContainer = document.getElementById('students-container');
+        const modal = document.getElementById('student-modal');
+        const closeModal = document.getElementById('close-modal');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const modalName = document.getElementById('modal-name');
+        const modalContent = document.getElementById('modal-content');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStudents('all');
+            setupEventListeners();
+        });
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button styles
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-blue-600', 'text-white');
+                        btn.classList.add('bg-gray-200', 'text-gray-800');
+                    });
+                    button.classList.remove('bg-gray-200', 'text-gray-800');
+                    button.classList.add('bg-blue-600', 'text-white');
+                    
+                    // Render filtered students
+                    renderStudents(button.getAttribute('data-category'));
+                });
+            });
+
+            // Close modal button
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.body.classList.remove('overflow-hidden');
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.classList.remove('overflow-hidden');
+                }
+            });
+        }
+
+        // Render students based on selected category
+        function renderStudents(category) {
+            studentsContainer.innerHTML = '';
+            const filteredStudents = category === 'all' ? 
+                students : 
+                students.filter(student => student.category === category);
+            
+            // Group students by category
+            const groupedStudents = {};
+            filteredStudents.forEach(student => {
+                if (!groupedStudents[student.categoryName]) {
+                    groupedStudents[student.categoryName] = [];
+                }
+                groupedStudents[student.categoryName].push(student);
+            });
+            
+            // Render each category and its students
+            Object.entries(groupedStudents).forEach(([categoryName, categoryStudents]) => {
+                // Add category heading
+                const categoryEl = document.createElement('div');
+                categoryEl.className = 'col-span-full mb-4 mt-8';
+                categoryEl.innerHTML = `
+                    <h2 class="text-2xl font-bold text-gray-800 px-4 py-2 border-l-4 border-blue-500">
+                        ${categoryName}
+                    </h2>
+                `;
+                studentsContainer.appendChild(categoryEl);
+                
+                // Add students in category
+                categoryStudents.forEach(student => {
+                    const card = document.createElement('div');
+                    card.className = 'student-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl';
+                    card.innerHTML = `
+                        <img src="${student.image}" alt="${student.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <span class="category-badge inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold mb-2">${student.position}</span>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1">${student.name}</h3>
+                            <p class="text-gray-600 text-sm">${student.department}, Year ${student.year}</p>
+                            <button class="view-profile mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm w-full" data-id="${student.id}">View Profile</button>
+                        </div>
+                    `;
+                    studentsContainer.appendChild(card);
+                });
+            });
+            
+            // Add event listeners to profile buttons
+            document.querySelectorAll('.view-profile').forEach(button => {
+                button.addEventListener('click', () => {
+                    const studentId = parseInt(button.getAttribute('data-id'));
+                    showStudentDetails(studentId);
+                });
+            });
+        }
+
+        // Show student details in modal
+        function showStudentDetails(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (!student) return;
+            
+            modalName.textContent = student.name;
+            
+            // Populate modal content
+            modalContent.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <img src="${student.image}" alt="${student.name}" class="w-full rounded-lg shadow-md">
+                        <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+                            <p class="font-semibold text-blue-600">${student.position} | ${student.categoryName}</p>
+                            <p class="text-gray-700">${student.department}, Year ${student.year}</p>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <div class="mb-4">
+                            <h3 class="text-xl font-semibold border-b border-gray-200 pb-2 mb-2">Biography</h3>
+                            <p class="text-gray-700">${student.bio}</p>
+                        </div>
+                        <div class="mb-4">
+                            <h3 class="text-xl font-semibold border-b border-gray-200 pb-2 mb-2">Achievements</h3>
+                            <ul class="list-disc list-inside text-gray-700">
+                                ${student.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold border-b border-gray-200 pb-2 mb-2">Election Manifesto</h3>
+                            <p class="text-gray-700 italic">"${student.manifesto}"</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Show modal
+            modal.style.display = 'block';
+            document.body.classList.add('overflow-hidden');
+        }
+    </script>
+</body>
+</html>

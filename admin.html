@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Amity University Election Portal</title>
+    <link rel="stylesheet" href="election-styles.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .admin-panel {
+            display: none;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .tab-button.active {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .candidate-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: #f8f8f8;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .card-footer {
+            padding: 10px 15px;
+            background-color: #f8f8f8;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 70%;
+            max-width: 600px;
+        }
+        
+        .image-preview {
+            width: 150px;
+            height: 150px;
+            border: 1px dashed #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .alert {
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BENGALURU</b></h1>
+                <h2 style="color:white;">Election Portal - Admin Panel</h2>
+            </div>
+            <div class="user-display">
+                <span id="adminDisplay">Admin Panel</span>
+                <button id="logoutBtn" class="btn logout-btn" style="display: none;">Logout</button>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <a href="main.html">Dashboard</a>
+        <a href="election.html">Elections</a>
+        <a href="candidates.html">Candidates</a>
+        <a href="ongoing-elections.html">Ongoing Elections</a>
+        <a href="admin.html" class="active">Admin</a>
+    </nav>
+    
+    <main>
+        <!-- Login Form -->
+        <div id="loginContainer" class="login-container">
+            <h2>Administrator Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div id="loginError" class="alert alert-danger" style="display: none;">
+                    Invalid username or password. Please try again.
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+        
+        <!-- Admin Panel (Hidden until login) -->
+        <div id="adminPanel" class="admin-panel">
+            <div class="admin-container">
+                <div class="alert alert-success" id="successMessage" style="display: none;">Changes saved successfully!</div>
+                
+                <h2>Candidate Management</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="gdg">GDG</button>
+                        <button class="tab-button" data-tab="microsoft">Microsoft</button>
+                        <button class="tab-button" data-tab="ieee">IEEE</button>
+                        <button class="tab-button" data-tab="aws">AWS</button>
+                    </div>
+                    
+                    <!-- GDG Tab Content -->
+                    <div id="gdg-tab" class="tab-content active">
+                        <div class="tab-header">
+                            <h3>Google Developer Group Candidates</h3>
+                            <button class="btn btn-primary" onclick="openAddModal('gdg')">Add New Candidate</button>
+                        </div>
+                        <div id="gdg-candidates-list" class="card-grid">
+                            <!-- Candidate cards will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Microsoft Tab Content -->
+                    <div id="microsoft-tab" class="tab-content">
+                        <div class="tab-header">
+                            <h3>Microsoft Student Ambassador Candidates</h3>
+                            <button class="btn btn-primary" onclick="openAddModal('microsoft')">Add New Candidate</button>
+                        </div>
+                        <div id="microsoft-candidates-list" class="card-grid">
+                            <!-- Candidate cards will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- IEEE Tab Content -->
+                    <div id="ieee-tab" class="tab-content">
+                        <div class="tab-header">
+                            <h3>IEEE Student Branch Candidates</h3>
+                            <button class="btn btn-primary" onclick="openAddModal('ieee')">Add New Candidate</button>
+                        </div>
+                        <div id="ieee-candidates-list" class="card-grid">
+                            <!-- Candidate cards will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- AWS Tab Content -->
+                    <div id="aws-tab" class="tab-content">
+                        <div class="tab-header">
+                            <h3>AWS Student Council Candidates</h3>
+                            <button class="btn btn-primary" onclick="openAddModal('aws')">Add New Candidate</button>
+                        </div>
+                        <div id="aws-candidates-list" class="card-grid">
+                            <!-- Candidate cards will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Candidate Modal -->
+    <div id="candidateModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Add New Candidate</h3>
+            <form id="candidateForm">
+                <input type="hidden" id="candidateId">
+                <input type="hidden" id="electionType">
+                
+                <div class="form-group">
+                    <label for="candidateName">Name:</label>
+                    <input type="text" id="candidateName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="candidatePosition">Position:</label>
+                    <select id="candidatePosition" required>
+                        <option value="">Select Position</option>
+                        <option value="President">President</option>
+                        <option value="Vice President">Vice President</option>
+                        <option value="Secretary">Secretary</option>
+                        <option value="Treasurer">Treasurer</option>
+                        <option value="Student Ambassador Lead">Student Ambassador Lead</option>
+                        <option value="Community Manager">Community Manager</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Candidate Photo:</label>
+                    <div id="imagePreview" class="image-preview">No image selected</div>
+                    <p><small>Image will be assigned automatically based on position.</small></p>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Save Candidate</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Confirm Delete Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeDeleteModal()">&times;</span>
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this candidate? This action cannot be undone.</p>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="social-media">
+            <a href="https://www.facebook.com">Facebook</a> |
+            <a href="https://twitter.com">Twitter</a> |
+            <a href="https://www.instagram.com">Instagram</a> |
+            <a href="https://www.linkedin.com">LinkedIn</a> |
+            <a href="https://www.youtube.com">YouTube</a>
+        </div>
+        <p style="color:white;">Administrator Panel</p>
+        <p style="color:white;">For assistance, contact: <a href="mailto:it@amitybengaluru.edu.in">it@amitybengaluru.edu.in</a></p>
+        <p style="color:white;">&copy; 2025 Amity University Bengaluru. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Default admin credentials (in a real application, this would be server-side)
+        const ADMIN_USERNAME = "admin";
+        const ADMIN_PASSWORD = "admin123";
+        
+        // Initialize candidate data if not exists
+        if (!localStorage.getItem('candidates')) {
+            // Default candidate data from the voters.html page
+            const defaultCandidates = {
+                'gdg': [
+                    { id: 'gdg1', name: 'Yashwanth', position: 'President', image: '1.jpg' },
+                    { id: 'gdg2', name: 'Adithya', position: 'President', image: '2.jpg' },
+                    { id: 'gdg3', name: 'Sujay', position: 'President', image: '3.jpg' },
+                    { id: 'gdg4', name: 'Naman', position: 'President', image: '4.jpg' }
+                ],
+                'microsoft': [
+                    { id: 'ms1', name: 'Tarun', position: 'President', image: '5.jpg' },
+                    { id: 'ms2', name: 'Prajwal', position: 'President', image: '6.jpg' },
+                    { id: 'ms3', name: 'Nikunj', position: 'President', image: '7.jpg' },
+                    { id: 'ms4', name: 'Arjun', position: 'President', image: '8.jpg' }
+                ],
+                'ieee': [
+                    { id: 'ieee1', name: 'Vikram', position: 'President', image: '9.jpg' },
+                    { id: 'ieee2', name: 'Sundeep', position: 'President', image: '10.jpg' },
+                    { id: 'ieee3', name: 'Jake', position: 'President', image: '11.jpg' },
+                    { id: 'ieee4', name: 'Pranay', position: 'President', image: '12.jpg' }
+                ],
+                'aws': [
+                    { id: 'aws1', name: 'Ram Charan', position: 'President', image: '13.jpg' },
+                    { id: 'aws2', name: 'Manoj', position: 'President', image: '14.jpg' },
+                    { id: 'aws3', name: 'Akash', position: 'President', image: '15.jpg' },
+                    { id: 'aws4', name: 'Rakesh', position: 'President', image: '16.jpg' }
+                ]
+            };
+            
+            localStorage.setItem('candidates', JSON.stringify(defaultCandidates));
+        }
+        
+        // DOM elements
+        const loginContainer = document.getElementById('loginContainer');
+        const adminPanel = document.getElementById('adminPanel');
+        const loginForm = document.getElementById('loginForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const candidateModal = document.getElementById('candidateModal');
+        const deleteModal = document.getElementById('deleteModal');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const successMessage = document.getElementById('successMessage');
+        
+        // Login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginError = document.getElementById('loginError');
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                loginContainer.style.display = 'none';
+                adminPanel.style.display = 'block';
+                logoutBtn.style.display = 'inline-block';
+                document.getElementById('adminDisplay').textContent = 'Welcome, Admin!';
+                loadCandidates();
+                loginError.style.display = 'none';
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+        
+        // Logout button
+        logoutBtn.addEventListener('click', function() {
+            loginContainer.style.display = 'block';
+            adminPanel.style.display = 'none';
+            logoutBtn.style.display = 'none';
+            document.getElementById('adminDisplay').textContent = 'Admin Panel';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        });
+        
+        // Tab navigation
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to current button and corresponding content
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Load candidates for each election
+        function loadCandidates() {
+            const candidates = JSON.parse(localStorage.getItem('candidates')) || {};
+            
+            // Load candidates for each election type
+            ['gdg', 'microsoft', 'ieee', 'aws'].forEach(type => {
+                const candidatesList = document.getElementById(`${type}-candidates-list`);
+                candidatesList.innerHTML = ''; // Clear existing candidates
+                
+                if (candidates[type] && candidates[type].length > 0) {
+                    candidates[type].forEach(candidate => {
+                        const candidateCard = createCandidateCard(candidate, type);
+                        candidatesList.appendChild(candidateCard);
+                    });
+                } else {
+                    candidatesList.innerHTML = '<p>No candidates found. Add candidates using the button above.</p>';
+                }
+            });
+        }
+        
+        // Create a candidate card
+        function createCandidateCard(candidate, electionType) {
+            const card = document.createElement('div');
+            card.className = 'candidate-card';
+            card.dataset.id = candidate.id;
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <h4>${candidate.name}</h4>
+                </div>
+                <div class="card-body">
+                    <div style="background-image: url('${candidate.image}'); width: 100%; height: 150px; background-size: cover; background-position: center; margin-bottom: 10px;"></div>
+                    <p><strong>Position:</strong> ${candidate.position}</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-warning edit-btn" data-id="${candidate.id}" data-type="${electionType}">Edit</button>
+                    <button class="btn btn-danger delete-btn" data-id="${candidate.id}" data-type="${electionType}">Delete</button>
+                </div>
+            `;
+            
+            // Add event listeners to buttons
+            card.querySelector('.edit-btn').addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const type = this.getAttribute('data-type');
+                openEditModal(id, type);
+            });
+            
+            card.querySelector('.delete-btn').addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const type = this.getAttribute('data-type');
+                openDeleteModal(id, type);
+            });
+            
+            return card;
+        }
+        
+        // Open the add candidate modal
+        function openAddModal(electionType) {
+            document.getElementById('modalTitle').textContent = 'Add New Candidate';
+            document.getElementById('candidateForm').reset();
+            document.getElementById('candidateId').value = '';
+            document.getElementById('electionType').value = electionType;
+            document.getElementById('imagePreview').innerHTML = 'No image selected';
+            document.getElementById('imagePreview').style.backgroundImage = 'none';
+            candidateModal.style.display = 'block';
+        }
+        
+        // Open the edit candidate modal
+        function openEditModal(candidateId, electionType) {
+            const candidates = JSON.parse(localStorage.getItem('candidates')) || {};
+            const candidate = candidates[electionType].find(c => c.id === candidateId);
+            
+            if (candidate) {
+                document.getElementById('modalTitle').textContent = 'Edit Candidate';
+                document.getElementById('candidateId').value = candidate.id;
+                document.getElementById('electionType').value = electionType;
+                document.getElementById('candidateName').value = candidate.name;
+                document.getElementById('candidatePosition').value = candidate.position;
+                
+                const imagePreview = document.getElementById('imagePreview');
+                imagePreview.innerHTML = '';
+                imagePreview.style.backgroundImage = `url('${candidate.image}')`;
+                
+                candidateModal.style.display = 'block';
+            }
+        }
+        
+        // Close the candidate modal
+        function closeModal() {
+            candidateModal.style.display = 'none';
+        }
+        
+        // Open delete confirmation modal
+        function openDeleteModal(candidateId, electionType) {
+            confirmDeleteBtn.setAttribute('data-id', candidateId);
+            confirmDeleteBtn.setAttribute('data-type', electionType);
+            deleteModal.style.display = 'block';
+        }
+        
+        // Close delete confirmation modal
+        function closeDeleteModal() {
+            deleteModal.style.display = 'none';
+        }
+        
+        // Submit candidate form (add/edit)
+        document.getElementById('candidateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('candidateId').value;
+            const electionType = document.getElementById('electionType').value;
+            const name = document.getElementById('candidateName').value;
+            const position = document.getElementById('candidatePosition').value;
+            
+            const candidates = JSON.parse(localStorage.getItem('candidates')) || {};
+            if (!candidates[electionType]) candidates[electionType] = [];
+            
+            // Find image file based on position
+            // This is simplified - in a real app you'd use uploaded images
+            let imageFile;
+            
+            // For simplicity, assign existing images based on position
+            // In a real application, you would handle file uploads properly
+            const positionImageMap = {
+                'President': electionType === 'gdg' ? '1.jpg' : 
+                            electionType === 'ieee' ? '9.jpg' : 
+                            electionType === 'aws' ? '13.jpg' : '1.jpg',
+                            
+                'Vice President': electionType === 'gdg' ? '2.jpg' : 
+                                electionType === 'ieee' ? '10.jpg' : 
+                                electionType === 'aws' ? '14.jpg' : '2.jpg',
+                                
+                'Secretary': electionType === 'gdg' ? '4.jpg' : 
+                            electionType === 'ieee' ? '11.jpg' : 
+                            electionType === 'microsoft' ? '6.jpg' :
+                            electionType === 'aws' ? '15.jpg' : '4.jpg',
+                            
+                'Treasurer': electionType === 'gdg' ? '3.jpg' : 
+                            electionType === 'ieee' ? '12.jpg' : 
+                            electionType === 'microsoft' ? '7.jpg' :
+                            electionType === 'aws' ? '16.jpg' : '3.jpg',
+                            
+                'Student Ambassador Lead': '5.jpg',
+                'Community Manager': '8.jpg'
+            };
+            
+            imageFile = positionImageMap[position] || '1.jpg';
+            
+            if (id) {
+                // Edit existing candidate
+                const index = candidates[electionType].findIndex(c => c.id === id);
+                if (index !== -1) {
+                    candidates[electionType][index] = {
+                        id: id,
+                        name: name,
+                        position: position,
+                        image: imageFile
+                    };
+                }
+            } else {
+                // Add new candidate
+                const newId = electionType + (candidates[electionType].length + 1);
+                candidates[electionType].push({
+                    id: newId,
+                    name: name,
+                    position: position,
+                    image: imageFile
+                });
+            }
+            
+            localStorage.setItem('candidates', JSON.stringify(candidates));
+            closeModal();
+            loadCandidates();
+            showSuccessMessage();
+        });
+        
+        // Delete a candidate
+        confirmDeleteBtn.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const type = this.getAttribute('data-type');
+            
+            const candidates = JSON.parse(localStorage.getItem('candidates')) || {};
+            if (candidates[type]) {
+                candidates[type] = candidates[type].filter(c => c.id !== id);
+                localStorage.setItem('candidates', JSON.stringify(candidates));
+                loadCandidates();
+                closeDeleteModal();
+                showSuccessMessage();
+            }
+        });
+        
+        // Show success message
+        function showSuccessMessage() {
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target == candidateModal) {
+                closeModal();
+            } else if (event.target == deleteModal) {
+                closeDeleteModal();
+            }
+        };
+    </script>
+</body>
+</html>

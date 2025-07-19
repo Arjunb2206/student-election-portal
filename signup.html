@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Amity University Student Portal</title>
+    <link rel="stylesheet" href="student-portal-styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BENGALURU</b></h1>
+                <h2>Student Portal - Registration</h2>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html" class="active">Signup</a>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="registration-container">
+                <h2>Create Your Account</h2>
+                <p>Register to access the student portal services</p>
+                <form action="login.html" method="GET">
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                    
+                    <label for="sen">SEN Number:</label>
+                    <input type="text" id="sen" name="sen" required>
+                    
+                    <label for="phonenumber">Phone Number:</label>
+                    <input type="tel" id="phonenumber" name="phonenumber" required pattern="[0-9]{10}">
+                    
+                    <label for="email">University Email Address:</label>
+                    <input type="email" id="email" name="email" required placeholder="example@amity.edu">
+                    
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required minlength="8">
+                    
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                    
+                    <button type="submit" class="btn" style="margin-left:150px;">Register Now</button>
+                </form>
+                
+                <div class="login-link">
+                    <p>Already registered? <a href="login.html">Login Here</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-media">
+            <a href="https://www.facebook.com">Facebook</a> |
+            <a href="https://twitter.com">Twitter</a> |
+            <a href="https://www.instagram.com">Instagram</a> |
+            <a href="https://www.linkedin.com">LinkedIn</a> |
+            <a href="https://www.youtube.com">YouTube</a>
+        </div>
+        <p>&copy; 2025 Amity University Bengaluru.All rights reserved.</p>
+        <p>Email: info@amitybangalore.edu.in | Phone: +91 80 1234 5678 | Address: Bangalore 560100</p>
+    </footer>
+</body>
+</html>

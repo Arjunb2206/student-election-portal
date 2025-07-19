@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ongoing Elections - Amity University Student Portal</title>
+    <link rel="stylesheet" href="election-styles.css">
+    <style>
+        .election-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .election-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .election-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timer {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #d9534f;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .info-button {
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .vote-button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 70%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .close-button {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BENGALURU</b></h1>
+                <h2 style="color:white;">Student Election Portal - Ongoing Elections</h2>
+            </div>
+            <div class="user-display">
+                <span id="userDisplay">Welcome, Student!</span>
+                <a href="login.html" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="main.html">Dashboard</a>
+        <a href="candidates.html">Candidates</a>
+        <a href="ongoing-elections.html" class="active">Ongoing Elections</a>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="card">
+                <h2>Ongoing Elections</h2>
+                <p>Please select from the ongoing elections below to cast your vote. Each election has its own deadline - make sure to vote before time runs out!</p>
+
+                <div class="election-grid">
+                    <!-- Microsoft Election Card -->
+                    <div class="election-card">
+                        <h3>Microsoft Student Ambassador Election</h3>
+                        <div class="timer" id="microsoft-timer">
+                            Time Remaining: <span class="countdown">2 days, 5 hours, 30 minutes</span>
+                        </div>
+                        <p>Vote for the next Microsoft Student Ambassador who will represent our university in Microsoft programs and events.</p>
+                        <p><strong>Positions:</strong> 1 Lead Ambassador, 2 Associate Ambassadors</p>
+                        <div class="action-buttons">
+                            <button class="info-button" onclick="showInfo('microsoft-info')">Info</button>
+                            <button class="vote-button" onclick="redirectToVote('microsoft')">Vote</button>
+                        </div>
+                    </div>
+
+                    <!-- GDG Election Card -->
+                    <div class="election-card">
+                        <h3>Google Developer Group (GDG) Elections</h3>
+                        <div class="timer" id="gdg-timer">
+                            Time Remaining: <span class="countdown">1 day, 12 hours, 45 minutes</span>
+                        </div>
+                        <p>Select the new leadership team for our campus Google Developer Group chapter for the upcoming academic year.</p>
+                        <p><strong>Positions:</strong> President, Vice President, Technical Lead, Events Coordinator</p>
+                        <div class="action-buttons">
+                            <button class="info-button" onclick="showInfo('gdg-info')">Info</button>
+                            <button class="vote-button" onclick="redirectToVote('gdg')">Vote</button>
+                        </div>
+                    </div>
+
+                    <!-- College Election Card -->
+                    <div class="election-card">
+                        <h3>AWS Student Council Election</h3>
+                        <div class="timer" id="college-timer">
+                            Time Remaining: <span class="countdown">3 days, 8 hours, 15 minutes</span>
+                        </div>
+                        <p>Vote for the student representatives who will form the official Amity College Council for this academic year.</p>
+                        <p><strong>Positions:</strong> President, Vice President, General Secretary, Treasurer, Department Representatives</p>
+                        <div class="action-buttons">
+                            <button class="info-button" onclick="showInfo('college-info')">Info</button>
+                            <button class="vote-button" onclick="redirectToVote('college')">Vote</button>
+                        </div>
+                    </div>
+
+                    <!-- IEEE Student Branch Election Card -->
+                    <div class="election-card">
+                        <h3>IEEE Student Branch Elections</h3>
+                        <div class="timer" id="ieee-timer">
+                            Time Remaining: <span class="countdown">4 days, 9 hours, 20 minutes</span>
+                        </div>
+                        <p>Select the new IEEE Student Branch Executive Committee to lead technical activities and workshops.</p>
+                        <p><strong>Positions:</strong> Chair, Vice Chair, Secretary, Treasurer, Technical Coordinator</p>
+                        <div class="action-buttons">
+                            <button class="info-button" onclick="showInfo('ieee-info')">Info</button>
+                            <button class="vote-button" onclick="redirectToVote('ieee')">Vote</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Info Modals -->
+    <div id="microsoft-info" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('microsoft-info')">&times;</span>
+            <h3>Microsoft Student Ambassador Election Information</h3>
+            <p>The Microsoft Student Ambassadors program is designed to recognize and nurture student leaders who are passionate about technology. Ambassadors represent Microsoft on campus and organize events, workshops, and learning initiatives.</p>
+            <h4>Requirements for Candidates:</h4>
+            <ul>
+                <li>Must have completed at least one year at Amity University</li>
+                <li>Should have experience with Microsoft technologies</li>
+                <li>Demonstrated leadership skills through past activities</li>
+                <li>Strong communication and organizational skills</li>
+            </ul>
+            <h4>Responsibilities of Elected Ambassadors:</h4>
+            <ul>
+                <li>Organize at least 2 Microsoft-related events per semester</li>
+                <li>Conduct technical workshops on campus</li>
+                <li>Represent Amity at Microsoft regional events</li>
+                <li>Mentor students interested in Microsoft technologies</li>
+            </ul>
+            <h4>Election Timeline:</h4>
+            <p>Voting Ends: June 12, 2025 at 11:59 PM</p>
+            <p>Results Announcement: June 14, 2025</p>
+        </div>
+    </div>
+
+    <div id="gdg-info" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('gdg-info')">&times;</span>
+            <h3>Google Developer Group (GDG) Election Information</h3>
+            <p>The Google Developer Group is a community of developers interested in Google technologies. The elected leadership team will be responsible for organizing events, workshops, and fostering a vibrant tech community on campus.</p>
+            <h4>Requirements for Candidates:</h4>
+            <ul>
+                <li>Active participation in previous GDG events</li>
+                <li>Knowledge of Google technologies and platforms</li>
+                <li>Strong organizational and team management skills</li>
+                <li>Ability to coordinate with external partners and speakers</li>
+            </ul>
+            <h4>Responsibilities of Elected Leaders:</h4>
+            <ul>
+                <li>Organize monthly tech talks and workshops</li>
+                <li>Coordinate with Google for resource access</li>
+                <li>Manage GDG social media and communication channels</li>
+                <li>Represent the university at regional GDG events</li>
+            </ul>
+            <h4>Election Timeline:</h4>
+            <p>Voting Ends: June 8, 2025 at 11:59 PM</p>
+            <p>Results Announcement: June 10, 2025</p>
+        </div>
+    </div>
+
+    <div id="college-info" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('college-info')">&times;</span>
+            <h3>AWS Student Council Election Information</h3>
+            <p>The AWS Student Council is the official representative body of students that works with university administration to address student concerns, organize events, and improve campus life.</p>
+            <h4>Requirements for Candidates:</h4>
+            <ul>
+                <li>Good academic standing with minimum CGPA of 8.0</li>
+                <li>No disciplinary actions on record</li>
+                <li>Active participation in at least one campus organization</li>
+                <li>Completed at least one full semester at Amity</li>
+            </ul>
+            <h4>Responsibilities of Elected Members:</h4>
+            <ul>
+                <li>Attend weekly council meetings with administration</li>
+                <li>Advocate for student interests and concerns</li>
+                <li>Manage budget allocation for student activities</li>
+                <li>Organize major campus events and festivals</li>
+                <li>Implement initiatives to improve campus life</li>
+            </ul>
+            <h4>Election Timeline:</h4>
+            <p>Voting Ends: June 15, 2025 at 5:00 PM</p>
+            <p>Results Announcement: June 17, 2025</p>
+        </div>
+    </div>
+
+    <div id="ieee-info" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('ieee-info')">&times;</span>
+            <h3>IEEE Student Branch Election Information</h3>
+            <p>The IEEE Student Branch connects students with the global IEEE community, providing access to technical resources, career development opportunities, and a platform to develop technical and professional skills.</p>
+            <h4>Requirements for Candidates:</h4>
+            <ul>
+                <li>Active IEEE membership</li>
+                <li>Participation in previous IEEE events</li>
+                <li>Good academic standing in technical courses</li>
+                <li>Demonstrated leadership or organizational skills</li>
+            </ul>
+            <h4>Responsibilities of Elected Members:</h4>
+            <ul>
+                <li>Organize technical workshops and competitions</li>
+                <li>Facilitate IEEE membership drives</li>
+                <li>Coordinate with faculty advisor and IEEE section</li>
+                <li>Manage branch finances and resources</li>
+                <li>Represent Amity at IEEE regional conferences</li>
+            </ul>
+            <h4>Election Timeline:</h4>
+            <p>Voting Ends: June 16, 2025 at 11:59 PM</p>
+            <p>Results Announcement: June 18, 2025</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-media">
+            <a href="https://www.facebook.com">Facebook</a> |
+            <a href="https://twitter.com">Twitter</a> |
+            <a href="https://www.instagram.com">Instagram</a> |
+            <a href="https://www.linkedin.com">LinkedIn</a> |
+            <a href="https://www.youtube.com">YouTube</a>
+        </div>
+        <p style="color:white;">Election Rules:</p>
+        <ul style="list-style: none; padding: 0; margin-bottom: 20px;color:white;"">
+            <li>⁙ Each student may vote only once per election</li>
+            <li>⁙ Votes cannot be changed after submission</li>
+            <li>⁙ Results will be announced after voting closes</li>
+        </ul>
+        <p style="color:white;">For assistance, contact: <a href="mailto:elections@amitybengaluru.edu.in">elections@amitybangalore.edu.in</a></p>
+        <p style="color:white;">&copy; 2025 Amity University Bengaluru. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Get URL parameters to display username if available
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            if (username) {
+                document.getElementById('userDisplay').textContent = 'Welcome, ' + username + '!';
+            }
+            
+            // Initialize countdown timers
+            startCountdowns();
+        }
+        
+        // Show info modal
+        function showInfo(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+        
+        // Close info modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Redirect to vote page with election type parameter
+        function redirectToVote(electionType) {
+            window.location.href = `voters.html?election=${electionType}`;
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                }
+            }
+        }
+        
+        // Countdown timer functionality
+        function startCountdowns() {
+            // Set end dates for each election (these would typically come from a database)
+            const endDates = {
+                'microsoft': new Date('July 26, 2025 23:59:59').getTime(),
+                'gdg': new Date('July 26, 2025 23:59:59').getTime(),
+                'college': new Date('July 26, 2025 17:00:00').getTime(),
+                'ieee': new Date('July 26, 2025 23:59:59').getTime()
+            };
+            
+            // Update timer every second
+            setInterval(function() {
+                const now = new Date().getTime();
+                
+                for (const [election, endDate] of Object.entries(endDates)) {
+                    const distance = endDate - now;
+                    
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    const timerElement = document.querySelector(`#${election}-timer .countdown`);
+                    
+                    if (distance < 0) {
+                        timerElement.innerHTML = "VOTING CLOSED";
+                    } else {
+                        timerElement.innerHTML = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+                    }
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

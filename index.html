@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amity University Student Portal</title>
+    <link rel="stylesheet" href="student-portal-styles.css">
+    <style>
+        .landing-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .feature-image {
+            width: 340px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .feature-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+ .landing-header {
+            background-color: transparent;
+            box-shadow: none;
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        
+
+        .landing-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .landing-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .landing-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-btn {
+            background: linear-gradient(to right, #3182ce, #2c5282);
+            border: none;
+        }
+
+        .register-btn {
+            background: linear-gradient(to right, #ed8936, #dd6b20);
+            border: none;
+        }
+
+        .landing-logo {
+            width: 180px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        .amity-name {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .landing-footer {
+            background-color: transparent;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+     .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+               <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BENGALURU</b></h1>
+                <h2>Student Portal</h2>
+            </div>
+            </div>
+            <div class="auth-buttons" style="margin-left:auto;">
+            <a href="login.html" class="landing-btn login-btn">Login</a>
+            <a href="signup.html" class="landing-btn register-btn">Register</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div style="text-align: center;">
+                <h2>Welcome to Amity University Student Portal</h2>
+                <p>Access university resources, view your academic information, and connect with campus services all in one place.</p>
+                
+                <div class="landing-features">
+                    <img src="amity1.jpg" alt="University Campus" class="feature-image">
+                    <img src="amity.jpg" alt="University Library" class="feature-image">
+                    <img src="amity2.jpg" alt="Modern Classroom" class="feature-image">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div>
+            <p>© 2025 Amity University Bengaluru. All Rights Reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Contact Us</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

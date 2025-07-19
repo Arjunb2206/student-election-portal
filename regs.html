@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidates Form - Amity University Student Election Portal</title>
+    <link rel="stylesheet" href="election-styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BANGALORE</b></h1>
+                <h2>Student Election Portal - Candidates Form</h2>
+            </div>
+            <div class="user-display">
+                <span id="userDisplay">Welcome, Student!</span>
+                <a href="login.html" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <a href="main.html">Dashboard</a>
+        <a href="candidates.html">Candidates</a>
+        <a href="regs.html" class="active">Candidates Form</a>
+        <a href="ongoing-elections.html">Ongoing Elections</a>
+    </nav>
+<main>
+    <div class="container">
+        <div class="card">
+            <h2>Candidate Submission Form</h2>
+            <p>Please complete this form to submit your candidacy for the student council elections.</p>
+            
+            <form action="candidates.html" method="post" class="election-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="radio-group">
+                        <label for="male">Male</label>
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="female">Female</label>
+                        <input type="radio" id="female" name="gender" value="female" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sen">URN/SEN Number:</label>
+                    <input type="text" id="sen" name="sen" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="position">Participating For:</label>
+                    <select id="position" name="position" required>
+                        <option value="">Select a Election</option>
+                        <option value="president">GDG Election</option>
+                        <option value="vicepresident">Microsoft SEA Election</option>
+                        <option value="secretary">AWS Student Election</option>
+                        <option value="treasurer">IEEE Election</option>
+                    </select>
+                  </div>
+
+
+                <div class="form-group">
+                    <label for="position">Position Applying For:</label>
+                    <select id="position" name="position" required>
+                        <option value="">Select a position</option>
+                        <option value="president">Student Council President</option>
+                        <option value="vicepresident">Vice President</option>
+                        <option value="secretary">General Secretary</option>
+                        <option value="treasurer">Treasurer</option>
+                        <option value="representative">Class Representative</option>
+                    </select>
+                  </div>
+                
+                <div class="form-group">
+                    <label for="statement">Campaign Statement:</label>
+                    <textarea id="statement" name="statement" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn">Submit Candidacy</button>
+                    <button type="reset" class="btn btn-secondary">Reset Form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div>
+        <p style="color:white;"> © 2025 Amity University Bangalore. All Rights Reserved.</p>
+        <p style="color:white;">
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a> | 
+            <a href="#">Contact Us</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+    // Set user display name from session if available
+    document.addEventListener('DOMContentLoaded', function() {
+        const userDisplay = document.getElementById('userDisplay');
+        const storedName = sessionStorage.getItem('studentName');
+        
+        if (storedName) {
+            userDisplay.textContent = `Welcome, ${storedName}!`;
+        }
+    });
+</script>
+</body>
+</html>
