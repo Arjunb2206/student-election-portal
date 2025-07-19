@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elections - Amity University Student Portal</title>
+    <link rel="stylesheet" href="student-portal-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div>
+                <img src="logo.png" alt="Amity University Logo" width="160">
+                <h1><b>AMITY UNIVERSITY BENGALURU</b></h1>
+                <h2>Student Election Portal</h2>
+            </div>
+            <div class="user-display">
+                <span id="userDisplay">Welcome, Student!</span>
+                <a href="login.html" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="main.html" class="active">Dashboard</a>
+        <a href="candidates.html">Election</a>
+        <a href="about.html">About</a>
+        <a href="news.html">News</a>
+        <a href="other.html">Other</a>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="card">
+                <h2>Welcome to the Student Portal</h2>
+                <p>This portal provides access to various student services and university resources. Use the navigation menu to explore different sections.</p>
+                
+                 <div class="success-message">
+                    <p>You have successfully logged in! Explore the portal to access student services.</p>
+                </div>
+            </div>
+
+            <div class="main-content" style="display: flex; flex-direction: row; gap: 30px;">
+                <div class="services-box" style="flex: 1;">
+                    <div class="service-item">
+                        <h3>BECOME A CANDIDATE</h3>
+                        <p>Stand for election and represent your fellow students. Candidate nominations are open until June 10, 2025.</p>
+                        <ul>
+                            <li><strong>Eligibility:</strong> Minimum 75% attendance, CGPA of 7.0 or above</li>
+                            <li><strong>Positions Available:</strong> President, Vice President, Secretary, Treasurer, and Department Representatives</li>
+                            <li><strong>Required Documents:</strong> Nomination form, Academic transcript, No-Dues certificate</li>
+                        </ul>
+                        <a href="regs.html" class="btn" style="margin-top: 15px;">Apply for Candidacy</a>
+                    </div>
+                    
+                    <div class="service-item">
+                        <h3>ELECTION TIMELINE</h3>
+                        <ul>
+                            <li><strong>Apr 25 - Jun 10:</strong> Candidate nominations</li>
+                            <li><strong>Jun 11:</strong> Candidate verification</li>
+                            <li><strong>Jun 12-14:</strong> Campaign period</li>
+                            <li><strong>Jun 15-17:</strong> Online voting</li>
+                            <li><strong>Jun 18:</strong> Results announcement</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <h3>VOTER INFORMATION</h3>
+                        <ul>
+                            <li>All registered students are eligible to vote</li>
+                            <li>Voting will be conducted through secure online portal</li>
+                            <li>Each voter can cast one vote per position</li>
+                            <li>Voting credentials will be sent to your university email</li>
+                            <li>Results will be published on this portal</li>
+                        </ul>
+                   <a href="rule.html" class="btn btn-secondary" style="margin-top: 15px;">Voter Guide</a>
+                    </div>
+                </div>
+                
+                <div class="image-box" style="flex: 1; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center;">
+                    <div class="card">
+                        <h3>ELECTION COMMITTEE</h3>
+                        <p>The election is overseen by an independent committee comprising faculty members and student representatives.</p>
+                        <p><strong>Committee Chair:</strong> Dr. Ramesh Kumar (Dean of Student Affairs)</p>
+                        <p><strong>Contact:</strong> elections@amity.edu | +91 80 12345678</p>
+                        <p>Report any election misconduct or violations immediately to the committee.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>CAMPAIGN RULES</h3>
+                        <ul>
+                            <li>No campaigning in academic buildings during class hours</li>
+                            <li>Digital campaigns must follow university social media policies</li>
+                            <li>Maximum campaign budget: ₹5000 per candidate</li>
+                            <li>No negative campaigning or personal attacks</li>
+                            <li>All campaign materials must be approved by election committee</li>
+                        </ul>
+                    </div>
+                    
+                    <img src="election.jpg" alt="Student Election" style="max-width: 100%; height: auto; border-radius: 8px;">
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>© 2025 Amity University Bengaluru. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get URL parameters to display username if available
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            if (username) {
+                document.getElementById('userDisplay').textContent = 'Welcome, ' + username + '!';
+            }
+        }
+    </script>
+</body>
+</html>
