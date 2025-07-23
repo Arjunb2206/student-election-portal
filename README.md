@@ -141,4 +141,4 @@ This project is licensed under the **Arjunb2206 License** - see the [LICENSE](LI
 
 For questions, feedback, or issues:  
 - Open a **[GitHub Issue](https://github.com/your-repo/issues)**  
-- Email: **arjun.b@s.amity.edu*  
+- Email: **arjun.b@s.amity.edu**  
