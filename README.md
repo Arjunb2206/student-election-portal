@@ -6,6 +6,8 @@
 ## Overview
 The Student Election Portal is a comprehensive web application designed to facilitate student council elections at Amity University Bengaluru. This platform provides a secure, transparent, and user-friendly interface for both voters and administrators to manage the entire election process.
 
+## Website : https://arjunb2206.github.io/student-election-portal/
+
 ## Features
 
 ### For Students
